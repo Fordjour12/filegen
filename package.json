@@ -1,0 +1,23 @@
+{
+  "name": "sveltekit-file-gen",
+  "module": "index.ts",
+  "type": "module",
+  "bin": {
+    "sv-file-gen": "./index.ts"
+  },
+  "scripts": {
+    "start": "bun run index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/fs-extra": "^11.0.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^12.1.0"
+  }
+}
