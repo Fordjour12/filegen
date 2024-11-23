@@ -23,17 +23,23 @@ Ensure you have the following installed:
 Clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/yourusername/filegen.git
+git clone repo
 cd filegen
-npm install
+bun install
 ```
 
 ### Usage
 
+To start using this project you must first link the file
+
+```bash
+bun link
+```
+
 To generate files using FileGen, run:
 
 ```bash
-npm run generate
+sv-files
 ```
 
 This command processes the templates and creates files in the specified output directory.

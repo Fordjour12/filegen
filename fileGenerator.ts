@@ -9,7 +9,7 @@ export async function generateFiles(
     dryRun: boolean
 ) {
     const routePath = path.join(process.cwd(), 'src', 'routes', routeName);
-    const templatesPath = path.join(process.cwd(), 'templates');
+    const templatesPath = path.join(__dirname, 'templates');
 
     // Ensure the routePath directory exists
     if (!dryRun) {
