@@ -1,4 +1,3 @@
-
 import chalk from 'chalk';
 import fs from 'fs-extra';
 import path from 'path';
@@ -12,6 +11,11 @@ export async function generateFiles(
     const routePath = path.join(process.cwd(), 'src', 'routes', routeName);
     const templatesPath = path.join(process.cwd(), 'templates');
 
+    // Ensure the routePath directory exists
+    if (!dryRun) {
+        await fs.ensureDir(routePath);
+    }
+
     for (const file of files) {
         const fileName = file.includes('(name)')
             ? file.replace('(name)', routeName)
@@ -24,18 +28,20 @@ export async function generateFiles(
             continue;
         }
 
+        // Check if the template file exists
+        if (!(await fs.pathExists(templatePath))) {
+            console.log(chalk.red(`Template file not found: ${templatePath}`));
+            continue;
+        }
+
         const templateContent = await fs.readFile(templatePath, 'utf-8');
         const fileContent = templateContent.replace(/{{name}}/g, routeName);
 
-        console.log(
-            dryRun
-                ? chalk.gray(`[Dry Run] Would create: ${filePath}`)
-                : chalk.green(`Creating file: ${filePath}`)
-        );
-
-        if (!dryRun) {
-            await fs.ensureDir(routePath);
-            await fs.writeFile(filePath, fileContent, 'utf-8');
+        if (dryRun) {
+            console.log(chalk.green(`[Dry Run] Would write file: ${filePath}`));
+        } else {
+            await fs.writeFile(filePath, fileContent);
+            console.log(chalk.green(`File written: ${filePath}`));
         }
     }
 }
